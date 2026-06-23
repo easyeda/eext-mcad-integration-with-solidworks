@@ -20,6 +20,7 @@
 3. 点击 `导入`，选择 `build/dist/mcad-solidworks-sync_v1.0.0.eext`。
 4. 在已安装扩展中启用 `SolidWorks机电协同`。
 5. 打开该扩展的 `外部交互` 权限，否则 WebSocket 无法连接本机桥接服务。
+![图 0](images/README_20260623_215526.jpg)
 
 ### 菜单入口
 
@@ -89,7 +90,6 @@ SolidWorks 桥接服务 -> EDA：
 	]
 }
 ```
-
 
 ## 构建
 

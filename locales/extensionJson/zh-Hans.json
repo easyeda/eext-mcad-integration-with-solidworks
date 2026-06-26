@@ -1,5 +1,6 @@
 {
 	"SolidWorks机电协同": "SolidWorks机电协同",
+	"通过 WebSocket 将 PCB 3D 模型发到 SolidWorks 进行查看和编辑": "通过 WebSocket 将 PCB 3D 模型发到 SolidWorks 进行查看和编辑",
 	"导出3D到SolidWorks": "导出3D到SolidWorks",
 	"启用双向交互": "启用双向交互",
 	"停止双向交互": "停止双向交互",

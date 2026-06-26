@@ -1,5 +1,7 @@
 # SolidWorks 机电协同 - 嘉立创 EDA 专业版扩展
 
+中文 | [English](README_en.md)
+
 这是嘉立创 EDA 专业版侧的 SolidWorks 联动扩展，基于 EasyEDA 官方 FreeCAD 联动扩展迁移而来。
 
 扩展负责：

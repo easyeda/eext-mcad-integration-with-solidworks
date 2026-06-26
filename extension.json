@@ -3,7 +3,7 @@
 	"uuid": "8d64b1a5e6f24c9c9c0a7e9f4b8a2d31",
 	"displayName": "SolidWorks机电协同",
 	"description": "通过 WebSocket 将 PCB 3D 模型发到 SolidWorks 进行查看和编辑",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"publisher": "EasyEDA",
 	"engines": {
 		"eda": "^3.2.0"

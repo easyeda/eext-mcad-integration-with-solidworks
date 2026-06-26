@@ -1,17 +1,23 @@
-# SolidWorks Mechatronics Integration - EasyEDA Pro Extension
+# SolidWorks Mechatronics Integration
 
 [中文](README.md) | English
 
-This is the EasyEDA Pro side extension for SolidWorks integration, migrated from the official EasyEDA FreeCAD integration extension.
+Real-time collaboration between EasyEDA and SolidWorks for PCB 3D models via WebSocket. Supports model export, bidirectional position synchronization, cross-probing, and deletion sync.
 
-The extension handles:
+## Features
+| Feature | Description |
+|---------|-------------|
+| 3D Model Export | Transfer PCB STEP models to SolidWorks in chunks |
+| Bidirectional Position Sync | Move a component in EDA → SolidWorks follows, and vice versa |
+| Cross-Probing | Click a component on one side, the other side auto-focuses |
+| Deletion Sync | Delete a component in EDA, SolidWorks removes it simultaneously |
 
-- Exporting PCB 3D STEP files from EasyEDA
-- Sending STEP file chunks to the local SolidWorks bridge service via WebSocket
-- Listening for component moves, selections, deletions, and designator changes on the EDA side
-- Receiving position synchronization, cross-probing, and deletion sync messages from the SolidWorks bridge service
-
-> Note: This extension only covers the EasyEDA side. The SolidWorks side requires a separate bridge service implementation, with the default listening address at `ws://localhost:8767`.
+## Requirements
+| Item | Requirement |
+|------|-------------|
+| SolidWorks | Version ≥ 2016 SP5 |
+| EasyEDA Pro | Version ≥ 3.0 |
+| Network | Localhost available |
 
 ## Usage
 
@@ -24,7 +30,7 @@ The extension handles:
 5. Grant the `External Interaction` permission to this extension, otherwise the WebSocket connection to the local bridge service will fail.
 ![Fig. 0](images/README_20260623_215526.jpg)
 
-### Menu Entries
+#### Menu Entries
 
 After installation, a `SolidWorks Mechatronics Integration` menu will appear in the top menu bar of the PCB editor:
 
@@ -35,73 +41,21 @@ After installation, a `SolidWorks Mechatronics Integration` menu will appear in 
 - `Disconnect SolidWorks`
 - `Check SolidWorks Connection`
 
-### Installing JLCICAN Toolbox
+### Installing JLCICAN Toolbox for SolidWorks
+1. Go to the JLCICAN Toolbox official website to download the installer: https://ican.jlc.com/
+![Official Website](images/官网界面.png)
+2. The installer is a compressed file. Extract it and follow the installation tutorial PDF inside.
+![Installation Tutorial](images/安装教程.png)
+3. After installing the toolbox, open SolidWorks and create a new part. You will see the JLCICAN Toolbox toolbar. Click the Mechanical Community dropdown menu and enable the "Co-design with SW" button.
+![Enable Mechatronics Integration](images/开启机电协同.png)
+4. Once enabled, an EDA icon will appear in the right-side task pane of SolidWorks. Click it to show the interface.
+![Mechatronics Integration Interface](images/机电协同界面位置.png)
+5. The service starts automatically after enabling. You can now click the one-click sync button in the EasyEDA extension to import the PCB model into SolidWorks and start collaboration.
+![EDA Extension Menu](images/EDA扩展菜单栏.png)
 
-Note: You need SolidWorks 2016 or later to use the ICAN Toolbox.
-
-1. Download the JLCICAN Toolbox: [https://ican.jlc.com](https://ican.jlc.com)
-2. Extract and follow the tutorial to install the ICAN Toolbox.
-3. Open SolidWorks, locate the ICAN Toolbox, and enable EDA interaction communication.
-
-### Communication Protocol
-
-The EDA extension connects as a WebSocket client:
-
-```text
-ws://localhost:8767
-```
-
-EDA -> SolidWorks Bridge Service:
-
-- `file_upload_start`
-- `file_upload_chunk`
-- `build_mapping`
-- `enable_monitor`
-- `disable_monitor`
-- `position_update`
-- `cross_probe`
-- `delete_object`
-- `rename_designator`
-
-SolidWorks Bridge Service -> EDA:
-
-- `connection_confirmed`
-- `upload_started`
-- `chunk_received`
-- `upload_complete`
-- `import_started`
-- `import_progress`
-- `import_complete`
-- `mapping_result`
-- `position_update_from_solidworks`
-- `cross_probe_from_solidworks`
-- `delete_from_solidworks`
-- `document_changed`
-- `error`
-
-Recommended `mapping_result` response format:
-
-```json
-{
-	"type": "mapping_result",
-	"mapping": [
-		{
-			"designator": "R1",
-			"solidworksLabel": "R1"
-		}
-	]
-}
-```
-
-## Build
-
-```powershell
-npm install
-npm run build
-```
-
-The generated `.eext` file will be located at:
-
-```text
-build/dist/eext-mcad-integration-with-solidworks_v1.0.0.eext
-```
+## Usage Notes
+1. After importing into SolidWorks, you need to manually set all components to floating; otherwise the position sync feature will not work.
+![Float Components](images/浮动子装配体.png)
+2. Click "Advanced" to configure file save location, synchronization rules, etc.
+![Advanced Settings](images/高级设置.png)
+3. Large files (many components, complex 3D models) may take several minutes to import. During import, the SolidWorks interface may become unresponsive — this is normal.
